@@ -33,15 +33,3 @@ docker run -it jnovent/postgres-client:latest /bin/sh
 # Use PostgreSQL client tools
 docker run -it jnovent/postgres-client:latest psql --help
 ```
-
-## GitHub Secrets Setup
-
-For the automated builds to work, the following secrets need to be configured in the GitHub repository:
-
-- `DOCKER_USERNAME`: Your Docker Hub username
-- `DOCKER_PASSWORD`: Your Docker Hub password or access token
-
-To set these up:
-1. Go to your repository settings
-2. Navigate to "Secrets and variables" → "Actions"
-3. Add the required secrets
