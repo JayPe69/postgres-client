@@ -38,4 +38,4 @@ docker run -it jnovent/postgres-client:latest psql --help
 
 ### Version tags
 
-`scripts/get-supported-versions.sh` lists the supported PostgreSQL major versions (from endoflife.date; requires `curl` and `jq`). The pipeline builds one image per version, tagged `<version>` (e.g. `17`) and `<version>-YYYYMMDD`. `latest` points to the newest supported version. Build locally with `--build-arg PG_VERSION=16`.
+`scripts/get-supported-versions.sh` lists the supported PostgreSQL major versions (from endoflife.date; requires `curl` and `jq`). The pipeline builds one image per version, tagged `<version>` (e.g. `17`) and `<version>-YYYYMMDD`. `latest` points to the newest supported version. Older versions use the newest Alpine release that still packages them. Build locally with `--build-arg PG_VERSION=16`.
