@@ -11,6 +11,8 @@ The Docker image is automatically built and published to Docker Hub at: **[jnove
 - PostgreSQL client (`postgresql-client`)
 - curl
 
+The image runs as an unprivileged user (`postgres-client`, UID/GID 1000).
+
 ## Automated Builds
 
 The Docker image is automatically rebuilt every Monday morning at 8:00 AM UTC using GitHub Actions.
@@ -34,15 +36,6 @@ docker run -it jnovent/postgres-client:latest /bin/sh
 docker run -it jnovent/postgres-client:latest psql --help
 ```
 
-### Non-root variant
-
-`Dockerfile.nonroot` builds the same image but runs as an unprivileged user (`postgres-client`, UID/GID 1000). It is published as `jnovent/postgres-client:nonroot`.
-
-```bash
-docker build -f Dockerfile.nonroot -t postgres-client:nonroot .
-docker run --rm jnovent/postgres-client:nonroot id
-```
-
 ### Version tags
 
-`scripts/get-supported-versions.sh` lists the supported PostgreSQL major versions (from endoflife.date; requires `curl` and `jq`). The pipeline builds one image per version, tagged `<version>` (e.g. `17`), `<version>-YYYYMMDD` and `<version>-nonroot`. `latest` and `nonroot` point to the newest supported version. Build locally with `--build-arg PG_VERSION=16`.
+`scripts/get-supported-versions.sh` lists the supported PostgreSQL major versions (from endoflife.date; requires `curl` and `jq`). The pipeline builds one image per version, tagged `<version>` (e.g. `17`) and `<version>-YYYYMMDD`. `latest` points to the newest supported version. Build locally with `--build-arg PG_VERSION=16`.

@@ -63,17 +63,6 @@ jobs:
           type=raw,value=${{ matrix.pg }}-{{date 'YYYYMMDD'}}
           type=raw,value=latest,enable=${{ matrix.pg == needs.versions.outputs.latest }}
 
-    - name: Extract metadata (non-root)
-      id: meta-nonroot
-      uses: docker/metadata-action@v5
-      with:
-        images: jnovent/postgres-client
-        flavor: latest=false
-        tags: |
-          type=raw,value=${{ matrix.pg }}-nonroot
-          type=raw,value=${{ matrix.pg }}-{{date 'YYYYMMDD'}}-nonroot
-          type=raw,value=nonroot,enable=${{ matrix.pg == needs.versions.outputs.latest }}
-
     - name: Build and push Docker image
       uses: docker/build-push-action@v5
       with:
@@ -83,14 +72,3 @@ jobs:
         push: true
         tags: ${{ steps.meta.outputs.tags }}
         labels: ${{ steps.meta.outputs.labels }}
-
-    - name: Build and push non-root Docker image
-      uses: docker/build-push-action@v5
-      with:
-        context: .
-        file: Dockerfile.nonroot
-        platforms: linux/amd64,linux/arm64
-        build-args: PG_VERSION=${{ matrix.pg }}
-        push: true
-        tags: ${{ steps.meta-nonroot.outputs.tags }}
-        labels: ${{ steps.meta-nonroot.outputs.labels }}
