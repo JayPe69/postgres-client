@@ -49,3 +49,21 @@ jobs:
         push: true
         tags: ${{ steps.meta.outputs.tags }}
         labels: ${{ steps.meta.outputs.labels }}
+    - name: Extract metadata (non-root)
+      id: meta-nonroot
+      uses: docker/metadata-action@v5
+      with:
+        images: jnovent/postgres-client
+        tags: |
+          type=schedule,pattern={{date 'YYYYMMDD'}}-nonroot
+          type=raw,value=nonroot
+
+    - name: Build and push non-root Docker image
+      uses: docker/build-push-action@v5
+      with:
+        context: .
+        file: Dockerfile.nonroot
+        platforms: linux/amd64,linux/arm64
+        push: true
+        tags: ${{ steps.meta-nonroot.outputs.tags }}
+        labels: ${{ steps.meta-nonroot.outputs.labels }}

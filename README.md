@@ -33,3 +33,12 @@ docker run -it jnovent/postgres-client:latest /bin/sh
 # Use PostgreSQL client tools
 docker run -it jnovent/postgres-client:latest psql --help
 ```
+
+### Non-root variant
+
+`Dockerfile.nonroot` builds the same image but runs as an unprivileged user (`postgres-client`, UID/GID 1000). It is published as `jnovent/postgres-client:nonroot`.
+
+```bash
+docker build -f Dockerfile.nonroot -t postgres-client:nonroot .
+docker run --rm jnovent/postgres-client:nonroot id
+```
