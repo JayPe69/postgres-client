@@ -42,3 +42,7 @@ docker run -it jnovent/postgres-client:latest psql --help
 docker build -f Dockerfile.nonroot -t postgres-client:nonroot .
 docker run --rm jnovent/postgres-client:nonroot id
 ```
+
+### Version tags
+
+`scripts/get-supported-versions.sh` lists the supported PostgreSQL major versions (from endoflife.date; requires `curl` and `jq`). The pipeline builds one image per version, tagged `<version>` (e.g. `17`), `<version>-YYYYMMDD` and `<version>-nonroot`. `latest` and `nonroot` point to the newest supported version. Build locally with `--build-arg PG_VERSION=16`.
