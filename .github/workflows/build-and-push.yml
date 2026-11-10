@@ -7,6 +7,17 @@ on:
   workflow_dispatch: # Allows manual triggering
 
 jobs:
+  keepalive:
+    if: github.event_name == 'schedule'
+    runs-on: ubuntu-latest
+    permissions:
+      actions: write
+    steps:
+    - name: Keep scheduled workflow enabled
+      env:
+        GH_TOKEN: ${{ github.token }}
+      run: gh api -X PUT "repos/${{ github.repository }}/actions/workflows/build-and-push.yml/enable"
+
   versions:
     runs-on: ubuntu-latest
     outputs:
